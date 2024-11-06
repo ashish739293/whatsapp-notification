@@ -1,0 +1,82 @@
+.page-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+    color: #009879; /* Dark teal color for the title */
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    margin: 25px 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+  }
+  
+  .styled-table th,
+  .styled-table td {
+    padding: 12px 15px;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  .styled-table th {
+    background-color: #009879; /* Dark teal for headers */
+    color: #ffffff; /* White text for headers */
+    font-weight: bold;
+  }
+  
+  .styled-table tbody tr {
+    border-bottom: 1px solid #dddddd; /* Light gray line for rows */
+  }
+  
+  .styled-table tbody tr:hover {
+    background-color: #f2f2f2; /* Light gray background on hover */
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 5px;
+  }
+  
+  .edit-btn {
+    background-color: #3498db; /* Blue for edit button */
+    color: white;
+  }
+  
+  .edit-btn:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+  }
+  
+  .delete-btn {
+    background-color: #e74c3c; /* Red for delete button */
+    color: white;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c0392b; /* Darker red on hover */
+  }
+  
+  .toolbar {
+    display: flex;
+    justify-content: flex-end; /* Aligns the add button to the right */
+  }
+  
+  .pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
