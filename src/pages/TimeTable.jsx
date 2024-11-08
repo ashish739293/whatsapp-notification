@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from './TimeTableModal';
-import './TableStyles.css'; // Styling for the table
-import './ModalStyles.css'; // Styling for the modal
+import './TableStyles.css';
+import './ModalStyles.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const TimeTable = () => {
-  const [data, setData] = useState([
-    { id: 1, rollNo: 101, name: 'John Doe', mobile: '9876543210', email: 'john@example.com', year: '1st', branch: 'CSE', status: 'Active' },
-    { id: 2, rollNo: 102, name: 'Jane Smith', mobile: '8765432109', email: 'jane@example.com', year: '2nd', branch: 'ECE', status: 'Completed' },
-    // Add more initial data here as needed
-  ]);
-
+  const [data, setData] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);
-  const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'ascending' });
+  const [sortConfig, setSortConfig] = useState({ key: '_id', direction: 'ascending' });
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5); // Items per page
+  const [itemsPerPage] = useState(5);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/getSaveTimeTables')
+      .then((response) => response.json())
+      .then((data) => setData(data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
 
   const openModal = () => {
     setEditData(null);
@@ -26,11 +28,11 @@ const TimeTable = () => {
 
   const saveData = (newData) => {
     if (editData) {
-      setData(data.map((item) => (item.id === editData.id ? newData : item)));
+      setData(data.map((item) => (item._id === editData._id ? newData : item)));
     } else {
-      setData([...data, { ...newData, id: data.length + 1 }]);
+      setData([...data, { ...newData, _id: `${data.length + 1}` }]);
     }
-    closeModal(); // Close modal after saving
+    closeModal();
   };
 
   const editRow = (row) => {
@@ -39,7 +41,7 @@ const TimeTable = () => {
   };
 
   const deleteRow = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    setData(data.filter((item) => item._id !== id));
   };
 
   const sortTable = (key) => {
@@ -57,7 +59,6 @@ const TimeTable = () => {
     setData(sortedData);
   };
 
-  // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
@@ -69,40 +70,42 @@ const TimeTable = () => {
 
       <div className="toolbar">
         <button className="save-btn" onClick={openModal}>
-          <i className="fas fa-plus"></i>Add Students
+          <i className="fas fa-plus"></i> Add Schedule
         </button>
       </div>
 
       <table className="styled-table">
         <thead>
           <tr>
-            <th onClick={() => sortTable('id')}>ID</th>
-            <th onClick={() => sortTable('rollNo')}>Roll No</th>
-            <th onClick={() => sortTable('name')}>Name</th>
-            <th onClick={() => sortTable('mobile')}>Mobile</th>
-            <th onClick={() => sortTable('email')}>Email</th>
-            <th onClick={() => sortTable('year')}>Year</th>
+            {/* <th onClick={() => sortTable('_id')}>ID</th> */}
             <th onClick={() => sortTable('branch')}>Branch</th>
-            <th onClick={() => sortTable('status')}>Status</th>
+            <th onClick={() => sortTable('year')}>Year</th>
+            <th onClick={() => sortTable('day')}>Day</th>
+            <th onClick={() => sortTable('startTime')}>Start Time</th>
+            <th onClick={() => sortTable('endTime')}>End Time</th>
+            <th onClick={() => sortTable('subject')}>Subject</th>
+            <th onClick={() => sortTable('teacher')}>Teacher</th>
+            <th onClick={() => sortTable('classroom')}>Classroom</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {currentItems.map((row) => (
-            <tr key={row.id}>
-              <td>{row.id}</td>
-              <td>{row.rollNo}</td>
-              <td>{row.name}</td>
-              <td>{row.mobile}</td>
-              <td>{row.email}</td>
-              <td>{row.year}</td>
-              <td>{row.branch}</td>
-              <td>{row.status}</td>
+            <tr key={row._id}>
+              {/* <td>{row._id}</td> */}
+              <td>{row.branch?.name || 'N/A'}</td>
+              <td>{row.year?.name || 'N/A'}</td>
+              <td>{row.day}</td>
+              <td>{row.startTime}</td>
+              <td>{row.endTime}</td>
+              <td>{row.subject?.name || 'N/A'}</td>
+              <td>{row.teacher?.name || 'N/A'}</td>
+              <td>{row.classroom?.roomNumber || 'N/A'}</td>
               <td>
                 <button className="edit-btn" onClick={() => editRow(row)}>
                   <i className="fas fa-edit"></i>
                 </button>
-                <button className="delete-btn" onClick={() => deleteRow(row.id)}>
+                <button className="delete-btn" onClick={() => deleteRow(row._id)}>
                   <i className="fas fa-trash-alt"></i>
                 </button>
               </td>
