@@ -4,9 +4,9 @@ import { lineCustomSeries, LinePrimaryXAxis, LinePrimaryYAxis } from '../../data
 import { useStateContext } from '../../contexts/ContextProvider' 
 
 const LineChart = () => {
-    const { currentMode } = useStateContext()
+     const { currentMode } = useStateContext()
 
-  return (
+   return (
     <ChartComponent
     id='line-chart'
     height='420px'
@@ -21,8 +21,8 @@ const LineChart = () => {
         <SeriesCollectionDirective>
             {lineCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} />)}
         </SeriesCollectionDirective>
-    </ChartComponent>
-  )
-}
+     </ChartComponent>
+ )
+ }
 
-export default LineChart
+ export default LineChart
