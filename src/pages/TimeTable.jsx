@@ -21,6 +21,7 @@ const TimeTable = () => {
 
   const openModal = () => {
     setEditData(null);
+    console.log("<><><><><><><><>",isModalOpen)
     setModalOpen(true);
   };
 

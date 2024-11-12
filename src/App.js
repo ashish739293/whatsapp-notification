@@ -5,6 +5,9 @@ import { FiSettings } from 'react-icons/fi'
 import { TooltipComponent } from '@syncfusion/ej2-react-popups'
 import { useStateContext } from './contexts/ContextProvider'
 import { Ecommerce, TimeTable, Schedule, Students, Login } from './pages'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const MainContent = () => {
   const { currentColor, activeMenu, themeSettings, setThemeSettings } = useStateContext()
@@ -65,6 +68,7 @@ const MainContent = () => {
         </div>
         {!isLoginPage && <Footer />}
       </div>
+      <ToastContainer />
     </div>
   )
 }

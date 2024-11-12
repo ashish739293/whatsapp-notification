@@ -59,7 +59,7 @@ const Modal = ({ isOpen, onClose, onSave, editData }) => {
     }
   };
 
-  if (!isOpen) return null;
+  // if (!isOpen) return null;
 
   return (
     <div className="modal" onClick={handleOutsideClick}>
